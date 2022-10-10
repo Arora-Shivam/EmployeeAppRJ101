@@ -1,4 +1,4 @@
-package com.tutorial.ExceptionHandler;
+package com.employee.ExceptionHandler;
 
 import java.time.LocalDateTime;
 
@@ -11,14 +11,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.tutorial.Exceptions.ErrorDetails;
-import com.tutorial.Exceptions.TutorialNotFound;
+import com.employee.Exceptions.AddressNotFound;
+import com.employee.Exceptions.EmployeeNotFound;
+import com.employee.Exceptions.ErrorDetails;
 
 @ControllerAdvice
 public class ExceptinalHandler {
 	
-	@ExceptionHandler(TutorialNotFound.class)
-	public ResponseEntity<ErrorDetails> tutorialNotFoundException(TutorialNotFound error,WebRequest webRequest){
+	@ExceptionHandler(EmployeeNotFound.class)
+	public ResponseEntity<ErrorDetails> EmployeeNotFoundException(EmployeeNotFound error,WebRequest webRequest){
+		
+		ErrorDetails errorDetails=new ErrorDetails(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "BAD REQUEST", error.getMessage());
+		
+		return new ResponseEntity<>(errorDetails,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(AddressNotFound.class)
+	public ResponseEntity<ErrorDetails> tutorialNotFoundException(AddressNotFound error,WebRequest webRequest){
 		
 		ErrorDetails errorDetails=new ErrorDetails(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "BAD REQUEST", error.getMessage());
 		
